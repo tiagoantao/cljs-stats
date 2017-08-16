@@ -3,36 +3,88 @@
   {:author "Tiago Antao"}
 )
 
+
 (defprotocol Distribution
-  "A statistical distribution"
+  "A continuous probability distribution"
   ;support
-  (pdf [x] "Probability density function")
-  (cdf [x] "Cumulative distribution function")
+  (CDF [d x] "Cumulative distribution function")
   ;quantile
-  (mean [] "Mean")
-  (median [] "Median")
-  (mode [] "Mode")
-  (variance [] "Variance")
-  (skewness [] "Skewness")
-  ;kurtosis
-  ;entropy
-  ;mgf
-  ;cf
-  ;fisher
-  )
+  (mean [d] "Mean")
+  (median [d] "Median")
+  (mode [d] "Mode")
+  (variance [d] "Variance")
+  (skewness [d] "Skewness")
+  (exkurtosis [d] "Excess kurtosis")
+  (entropy [d] "Entropy")
+  (MGF [d] "Moment-generating function")
+  (CF [d] "Characteristic function")
+  (fisher-inf [d] "Fisher-information"))
+
+
+(defprotocol ContinuousDistribution
+  "A continuous probability distribution"
+  (PDF [d x] "Probability density function"))
+
+(defprotocol DiscreteDistribution
+  "A discrete probability distribution"
+  (PMF [d x] "Probability mass function")
+  (PGF [x] "Probability-generating function"))
+
+(defn erf [v] nil) ;XXX To be defined and moved
+
+(defn factorial [n]
+    (reduce * (range 1 (inc n)))) ;XXX factorial(!?!?) to be moved
+
+(defn binomial-coef [n k] (/ (factorial n) (*
+                                            (factorial k)
+                                            (factorial (- n k)) ))) ;XXX to be moved
+
+(defn sum [start end f]
+  (reduce + #(f %)  (range start (+ 1 end))))
+
+;Discrete Distributions
+
+(deftype Binomial [n p]
+  Distribution
+  DiscreteDistribution
+  (PMF [d k] (* (binomial-coef n k) (js.Math/pow p k) (js.Math/pow (- 1 p) (- n k))))
+  (CDF [d k] (sum 0 (- k 1) #(* (binomial-coef n %)
+                                (js.Math/pow p %)
+                                (js.Math/pow (p %) (- n %)))))   ;assuming k integer
+  (mean [d] (* n p))
+  (median [d] nil) ;XXX
+  (mode [d] nil) ;XXX
+  (variance [d] (* n p (- 1 p)))
+  (skewness [d] (/ (- 1 (* 2 p))
+                   (js.Math/sqrt (* n p (- 1 p)))))
+  (exkurtosis [d] nil) ;XXX
+  (entropy [d] nil) ;XXX
+  (MGF [d] nil) ;XXX
+  (CF [d] nil) ;XXX
+  (fisher-inf [d] nil)) ;XXX
+
+
+
+;Continuous Distributions
 
 (deftype Normal [mean variance]
   Distribution
-  (pdf [x] (/ 1 (* (.sqrt js/Math (* 2 js/Math.PI variance))
+  ContinuousDistribution
+  (PDF [d x] (/ 1 (* (.sqrt js/Math (* 2 js/Math.PI variance))
                    (.pow js/Math js/Math.E
                          (- (/ (.pow js/Math (- x variance) 2)
                                (* 2 variance variance)))))))
-  (cdf [x] (/ (+ 1 (erf (/ (- x mean)
-                           (* variance (.srqt js/Math 2)))))
+  (CDF [d x] (/ (+ 1 (erf (/ (- x mean)
+                           (* variance (.srqt js/Math 2))))))
               2)
-  (mean [] mean)
-  (median [] mean)
-  (mode [] mean)
-  (variance [] variance )
-  (skewness [] 0)
-)
+  (mean [d] mean)
+  (median [d] mean)
+  (mode [d] mean)
+  (variance [d] variance)
+  (skewness [d] 0)
+  (exkurtosis [d] 0)
+  (entropy [d] nil) ;XXX
+  (MGF [d] nil) ;XXX
+  (CF [d] nil) ;XXX
+  (fisher-inf [d] nil)) ;XXX
+ 

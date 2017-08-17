@@ -10,7 +10,9 @@
   :plugins [[lein-figwheel "0.5.12"]
             [lein-marginalia "0.9.0"]
             [lein-cljsbuild "1.1.6"] ;:exclusions [[org.clojure/clojure]]]
-            [lein-doo "0.1.7"]]
+            [lein-doo "0.1.7"]
+            [cljs/vega "3.0.1-0"]
+            [cljs/vega-lite "2.0.0-beta.14-0"]]
 
   :cljsbuild
   {:builds {
@@ -26,13 +28,13 @@
                         :output-dir "resources/public/js/compiled/out"
                         :source-map-timestamp true
                         :preloads [devtools.preload]
-                        :language-in :es5
-                        :language-out :es5
-                        :npm-deps {:vega-lite "2.0.0-beta.10" :vega "3.0.1"}
+                        ;:language-in :es5
+                        ;:language-out :es5
+                        ;:npm-deps {:vega-lite "2.0.0-beta.10" :vega "3.0.1"}
+                        ;:install-deps true
+                        :static-fns true
                         :pretty-print false
-                        :optimizations :none
-                        :install-deps true
-                        :static-fns true}}
+                        :optimizations :none}}
 
                         ;:test
                         ;{:source-paths ["src" "test"]

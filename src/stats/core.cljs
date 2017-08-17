@@ -1,8 +1,8 @@
 (ns stats.core
   "Stats playground"
   {:author "Tiago Antao"}
-  (:require [vega :as vg]
-            [vega-lite :as vl]))
+  (:require [cljsjs.vega :as vg]
+            [cljsjs.vega-lite :as vl]))
 
 (enable-console-print!)
 

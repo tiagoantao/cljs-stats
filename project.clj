@@ -11,8 +11,8 @@
             [lein-marginalia "0.9.0"]
             [lein-cljsbuild "1.1.6"] ;:exclusions [[org.clojure/clojure]]]
             [lein-doo "0.1.7"]
-            [cljs/vega "3.0.1-0"]
-            [cljs/vega-lite "2.0.0-beta.14-0"]]
+            [cljsjs/vega "3.0.1-0"]
+            [cljsjs/vega-lite "2.0.0-beta.14-0"]]
 
   :cljsbuild
   {:builds {

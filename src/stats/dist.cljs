@@ -48,7 +48,8 @@
 (deftype Binomial [n p]
   Distribution
   DiscreteDistribution
-  (sample ([d] (random d 1)) nil)
+  (sample [d] (sample d 1))
+  (sample [d nobs] nil) ; XXX
   (PMF [d k] (* (binomial-coef n k) (js.Math/pow p k) (js.Math/pow (- 1 p) (- n k))))
   (CDF [d k] (sum 0 (- k 1) #(* (binomial-coef n %)
                                 (js.Math/pow p %)
@@ -73,23 +74,24 @@
 (deftype Normal [mean variance]
   Distribution
   ContinuousDistribution
-  (sample ([d] (random d 1)) ([d nobs]  ([d nobs]
-                                         (loop [x1 0 x2 0 r2 0]
-                                           (if (and (> r2 0) (< r2 1))
-                                             (let [f (js.Math./sqrt (/ (* -2 (js.Math/log r2)) r2))]
-                                               (+ mean (* (js.Math/sqrt variance) f))
-                                               (let [x1 (- (* 2 (js.Math/random) 1))
-                                                     x2 (- (* 2 (js.Math/random) 1))
-                                                     r2 (+ (* x1 x1) (* x2 x2))]
-                                                 (recur x1 x2 r2)
-                                                 )))))))
+  (sample [d] (sample d 1))
+  (sample [d nobs]  ([d nobs]
+                     (loop [x1 0 x2 0 r2 0]
+                       (if (and (> r2 0) (< r2 1))
+                         (let [f (js.Math./sqrt (/ (* -2 (js.Math/log r2)) r2))]
+                           (+ mean (* (js.Math/sqrt variance) f))
+                           (let [x1 (- (* 2 (js.Math/random) 1))
+                                 x2 (- (* 2 (js.Math/random) 1))
+                                 r2 (+ (* x1 x1) (* x2 x2))]
+                             (recur x1 x2 r2)
+                             ))))))
   (PDF [d x] (/ 1 (* (.sqrt js/Math (* 2 js/Math.PI variance))
                      (.pow js/Math js/Math.E
                            (- (/ (.pow js/Math (- x variance) 2)
                                  (* 2 variance variance)))))))
   (CDF [d x] (/ (+ 1 (erf (/ (- x mean)
                              (* variance (.srqt js/Math 2))))))
-    2)
+       2)
   (mean [d] mean)
   (median [d] mean)
   (mode [d] mean)

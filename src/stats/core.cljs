@@ -1,8 +1,8 @@
 (ns stats.core
   "Stats playground"
   {:author "Tiago Antao"}
-  (:require [cljsjs.vega :as vg]
-            [cljsjs.vega-lite :as vl]))
+  (:require [cljsjs.vega]
+            [cljsjs.vega-lite]))
 
 (enable-console-print!)
 
@@ -44,5 +44,5 @@
               (set! (.-width jspec) 300)
               (set! (.-heigth jspec) 300)
               (let [source (.stringify js/JSON jspec nil 2)
-                    spec (.spec (vl/compile jspec))])))
+                    spec (.-spec (js/vl.compile jspec))])))
   (prn 2))

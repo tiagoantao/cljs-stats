@@ -5,14 +5,14 @@
             :url "https://www.gnu.org/licenses/agpl.html"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.884"]]
+                 [org.clojure/clojurescript "1.9.884"]
+                 [cljsjs/vega "3.0.1-0"]
+                 [cljsjs/vega-lite "2.0.0-beta.14-0"]]
 
   :plugins [[lein-figwheel "0.5.12"]
             [lein-marginalia "0.9.0"]
-            [lein-cljsbuild "1.1.6"] ;:exclusions [[org.clojure/clojure]]]
-            [lein-doo "0.1.7"]
-            [cljsjs/vega "3.0.1-0"]
-            [cljsjs/vega-lite "2.0.0-beta.14-0"]]
+            [lein-cljsbuild "1.1.6" :exclusions [[org.clojure/clojure]]]
+            [lein-doo "0.1.7"]]
 
   :cljsbuild
   {:builds {

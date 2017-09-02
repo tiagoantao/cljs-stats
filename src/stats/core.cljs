@@ -2,7 +2,8 @@
   "Stats playground"
   {:author "Tiago Antao"}
   (:require [cljsjs.vega]
-            [cljsjs.vega-lite]))
+            [cljsjs.vega-lite]
+            [cljsjs.d3]))
 
 (enable-console-print!)
 
@@ -44,5 +45,11 @@
               (set! (.-width jspec) 300)
               (set! (.-heigth jspec) 300)
               (let [source (.stringify js/JSON jspec nil 2)
-                    spec (.-spec (js/vl.compile jspec))])))
-  (prn 2))
+                    spec (.-spec (js/vl.compile jspec))
+                    div (.html (.classed (js/d3.select "#vis-simple") "vega-embed" true) "")
+                    ]
+                (prn (js/vega.parse spec))
+                (.-spec (js/vega.parse spec {} (fn [error chart]
+                                                 (prn 3))))
+                (prn 2)))))
+

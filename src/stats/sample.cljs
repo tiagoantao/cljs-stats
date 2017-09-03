@@ -14,32 +14,26 @@
   {:author "Tiago Antao"}
 )
 
-(defprotocol Sample
-)
-
-(defrecord Observations [coll]
-   Sample
+(defrecord Sample [data]
 )
 
 (extend-protocol ISeqable
-  Observations
-  (-seq [o] (seq (:coll o))))
-
-(def aa (Observations. [1 2 3]))
-
-
-(defrecord Histogram [hist]
   Sample
-  )
+  (-seq [o] (condp some (keys (:data o))
+              #{:hist}  ((fn find [seq]
+                       (if (empty? seq)
+                         (list)
+                         (concat (repeat (second (first seq))
+                                         (ffirst seq))
+                                 (find (rest seq))))) (:hist (:data o)))
 
-(extend-protocol ISeqable
-  Histogram
-  (-seq [o] ((fn find [seq]
-               (if (empty? seq)
-                 (list)
-                 (concat (repeat (second (first seq)) (first (first seq))) (find (rest seq))))) (:hist o))))
+              #{:obs} (seq (:obs (:data o))))))
+
+(seq (Sample. {:hist {1 10 2 3}}))
+(seq (Sample. {:obs [1 2 3]}))
+
+(Sample. {:obs [1]})
 
 
-(def bb (Histogram. {1 10 2 5 10 1}))
-
-(seq bb)
+(Sample. {:hist {1 10}})
+(Sample. {:hist {1 10} :obs 1})

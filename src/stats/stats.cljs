@@ -5,12 +5,15 @@
 
 (defn mean
   "Mean"
-  [seq] (/ (reduce + seq) (count seq)))
+  [v] (/ (reduce + seq) (nobs v)))
 
 (comment
 (defn median
   "Median"
-  [col] (
+  [v] (
   )
 )
 )
+
+(defn var
+  [v] (let [mean-v (mean v)] (mean (map #(js/Math.pow (% - mean-v) 2)))))

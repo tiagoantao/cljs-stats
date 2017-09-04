@@ -15,6 +15,7 @@
 )
 
 (defrecord Sample [data]
+  (nobs [s] (count (:obs (:data s))))
 )
 
 (extend-protocol ISeqable

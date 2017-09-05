@@ -11,16 +11,17 @@
      (* (std v1) (std v2))))
 
 
-(defn all-pos [v coll]
-  (let [first (some #(= v %) coll)]
-    (if (nil? first)
+(defn all-pos [v vec]
+  (let [first (.indexOf vec v)]
+    (if (= -1 first)
       (list)
       XXXX
      ) 
     ))
 
 (defn rank [v]
-  (let [s (sort v)]))
+  (let [s (into [] (sort v))
+        poses (all-pos v s)]))
 
 
 (defn rank-sp

@@ -14,8 +14,11 @@
 (defn all-pos [v vec]
   (let [first (.indexOf vec v)]
     (if (= -1 first)
-      (list)
-      XXXX
+      []
+      (loop [pos (inc first) curr [first]]
+                    (if (= v (get vec pos))
+                      (recur (inc pos) (conj curr pos) )
+                      curr))
      ) 
     ))
 

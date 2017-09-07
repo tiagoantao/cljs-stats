@@ -1,9 +1,9 @@
 (ns stats.test
   "Statistical Tests
   "
-  (:require [stats.stats :refer std]
-            [stats.multi :refer cov])
   {:author "Tiago Antao"}
+  (:require [stats.stats :refer [std]]
+            [stats.multi :refer [cov]])
   )
 
 (defn pearson [v1 v2]

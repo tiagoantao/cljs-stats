@@ -1,8 +1,8 @@
 (ns stats.multi
   "Multivariate statistics
   "
-  (:require [stats.stats :refer [mean]])
   {:author "Tiago Antao"}
+  (:require [stats.stats :refer [mean]])
   )
 
 (defn cov [v1 v2]

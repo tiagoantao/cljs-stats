@@ -14,8 +14,11 @@
   {:author "Tiago Antao"}
 )
 
+(defprotocol Observations
+  (nobs [s] (count (:obs (:data s)))))
+
 (defrecord Sample [data]
-  (nobs [s] (count (:obs (:data s))))
+  Observations
 )
 
 (extend-protocol ISeqable

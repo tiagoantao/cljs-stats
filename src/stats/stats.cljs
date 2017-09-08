@@ -2,7 +2,6 @@
   "Common statistics"
   {:author "Tiago Antao"}
   (:require [stats.sample :refer [nobs Observations]])
-
 )
 
 (defn mean
@@ -15,13 +14,15 @@
 (defn std
   [v] (js/Math.sqrt (variance v)))
 
-
 (defn median
   "Median"
   [v] (let [srt (into [] (sort v) )
             half (/ (count v) 2)]
         (if (int? half)
-          (nth srt half)
           (/ (+ (nth srt (- half 0.5))
-                (nth srt (- half 0.5))) 2)))
+                (nth srt (+ half 0.5))) 2))
+        (nth srt half)
+        )
 )
+
+(median [1 2 3 4 5])

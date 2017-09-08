@@ -10,22 +10,19 @@
   (/ (cov v1 v2)
      (* (std v1) (std v2))))
 
-
 (defn all-pos [v vec]
-  (let [first (.indexOf vec v)]
-    (if (= -1 first)
-      []
-      (loop [pos (inc first) curr [first]]
-                    (if (= v (get vec pos))
-                      (recur (inc pos) (conj curr pos) )
-                      curr))
-     ) 
-    ))
+  (if (vector? vec)
+    (let [first (.indexOf vec v)]
+      (if (= -1 first)
+        []
+        (loop [pos (inc first) curr [first]]
+          (if (= v (get vec pos))
+            (recur (inc pos) (conj curr pos))
+            curr))))))
 
 (defn rank [v]
   (let [s (into [] (sort v))
         poses (all-pos v s)]))
-
 
 (defn rank-sp
   "Spearman rank correlation"

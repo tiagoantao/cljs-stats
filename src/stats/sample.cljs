@@ -38,12 +38,3 @@
                                  (find (rest seq))))) (:hist (:data o)))
 
               #{:obs} (seq (:obs (:data o))))))
-
-(seq (Sample. {:hist {1 10 2 3}}))
-(seq (Sample. {:obs [1 2 3]}))
-
-(Sample. {:obs [1]})
-
-
-(Sample. {:hist {1 10}})
-(Sample. {:hist {1 10} :obs 1})

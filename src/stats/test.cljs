@@ -2,7 +2,7 @@
   "Statistical Tests
   "
   {:author "Tiago Antao"}
-  (:require [stats.stats :refer [std]]
+  (:require [stats.stats :refer [mean std]]
             [stats.multi :refer [cov]])
   )
 
@@ -22,7 +22,13 @@
 
 (defn rank [v]
   (let [s (into [] (sort v))
-        poses (all-pos v s)]))
+        poses (map #(all-pos % s) v)]
+    (prn poses)
+    (map #(mean %) v)
+    ))
+
+(rank [0.1 0.2 0 0])
+
 
 (defn rank-sp
   "Spearman rank correlation"

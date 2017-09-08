@@ -10,6 +10,6 @@
         mean-v2 (mean v2)]
     (/ (reduce + (map * (map (- v1 mean-v1))
                       (- v2 mean-v2)))
-       (- n 1))
+       (dec (nobs v1)))
   ))
 

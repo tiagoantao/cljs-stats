@@ -7,7 +7,7 @@
 
 (defn mean
   "Mean"
-  [v] (/ (reduce + seq) (nobs v)))
+  [v] (/ (reduce + v) (nobs v)))
 
 (defn variance
   [v] (let [mean-v (mean v)] (mean (map #(js/Math.pow (% - mean-v) 2)))))

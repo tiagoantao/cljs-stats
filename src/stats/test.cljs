@@ -23,7 +23,6 @@
 (defn rank [v]
   (let [s (into [] (sort v))
         poses (map #(all-pos % s) v)]
-    (prn poses)
     (map #(mean %) v)
     ))
 

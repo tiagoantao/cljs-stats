@@ -17,9 +17,15 @@
 (defprotocol Observations
   (nobs [s] (count (:obs (:data s)))))
 
+(extend-protocol Observations
+  PersistentVector
+  (nobs [s] (count s))
+  List
+  (nobs [s] (count s)))
+
 (defrecord Sample [data]
   Observations
-)
+  )
 
 (extend-protocol ISeqable
   Sample

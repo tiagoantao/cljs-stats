@@ -15,11 +15,13 @@
 (defn std
   [v] (js/Math.sqrt (variance v)))
 
-(comment
+
 (defn median
   "Median"
-  [v] (
-  )
+  [v] (let [srt (into [] (sort v) )
+            half (/ (count v) 2)]
+        (if (int? half)
+          (nth srt half)
+          (/ (+ (nth srt (- half 0.5))
+                (nth srt (- half 0.5))) 2)))
 )
-)
-

@@ -4,5 +4,5 @@
             [stats.sample-test]
             [stats.test-test]))
 
-(doo-tests 'stats.sample-test)
-(doo-tests 'stats.test-test)
+(doo-tests 'stats.sample-test
+           'stats.test-test)

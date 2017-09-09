@@ -2,7 +2,9 @@
   (:require [cljs.test :as test]
             [doo.runner :refer-macros [doo-all-tests doo-tests]]
             [stats.sample-test]
-            [stats.test-test]))
+            [stats.test-test]
+            [stats.stats-test]))
 
 (doo-tests 'stats.sample-test
-           'stats.test-test)
+           'stats.test-test
+           'stats.stats-test)

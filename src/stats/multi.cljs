@@ -2,7 +2,8 @@
   "Multivariate statistics
   "
   {:author "Tiago Antao"}
-  (:require [stats.stats :refer [mean]])
+  (:require [stats.stats :refer [mean]]
+            [stats.sample :refer [nobs]])
   )
 
 (defn cov [v1 v2]

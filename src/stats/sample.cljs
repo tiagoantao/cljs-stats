@@ -15,16 +15,19 @@
 )
 
 (defprotocol Observations
-  (nobs [s] (count (:obs (:data s)))))
+  (nobs [s] "Number of observations"))
 
 (extend-protocol Observations
   PersistentVector
   (nobs [s] (count s))
   List
+  (nobs [s] (count s))
+  LazySeq
   (nobs [s] (count s)))
 
 (defrecord Sample [data]
   Observations
+  (nobs [s] (count (:obs (:data s))))
   )
 
 (extend-protocol ISeqable
@@ -39,3 +42,6 @@
 
               #{:obs} (seq (:obs (:data o))))))
 
+(extend-protocol ICounted
+  Sample
+  (-count [s] (count (:obs (:data s)))))

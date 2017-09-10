@@ -15,10 +15,10 @@ let siteBuild = metalsmith(__dirname)
     })
     .use(layouts({
         engine: 'nunjucks',
-        default: 'post.html',
+        default: 'base.html',
         partials: 'partials',
     }))
-    .destination('./build')
+    .destination('../resources/public')
     .build(function(err) {
         if (err) {
             console.log(err);

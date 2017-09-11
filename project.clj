@@ -19,11 +19,8 @@
   {:builds {
             :dev
             {:source-paths ["src"]
-
-             :figwheel {;:on-jsload "stats.core/on-js-reload"
-                        }
-
-             :compiler {:main stats.core
+             :figwheel {;:on-jsload "stats.web/on-js-reload"}
+             :compiler {:main stats.web
                         :asset-path "js/compiled/out"
                         :output-to "resources/public/js/compiled/stats.js"
                         :output-dir "resources/public/js/compiled/out"
@@ -37,13 +34,11 @@
                         :pretty-print false
                         :optimizations :none}}
 
-                        :test
-                        {:source-paths ["src" "test"]
-                         :compiler {:output-to "out/testable.js"
-                                    :main stats.runner
-                                    :optimizations :none
-                                    }}
-
+            :test
+             {:source-paths ["src" "test"]
+              :compiler {:output-to "out/testable.js"
+              :main stats.runner
+              :optimizations :none}}
             }}
 
   :figwheel {

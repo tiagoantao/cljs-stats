@@ -2,9 +2,50 @@
   "Statistical Tests
   "
   {:author "Tiago Antao"}
-  (:require [stats.stats :refer [mean std]]
+  (:require [stats.stats :refer [mean std variance]]
             [stats.multi :refer [cov]])
   )
+
+
+
+;XXX More structured report (e.g. df)
+
+;mean comparisons
+
+(defn t-test-one [v miu]
+  (let [m (mean v)
+        s (std v)]
+    (/ (- m miu) (/ s (.sqrt js/Math (nobs v))))))
+
+(defn t-test [v1 v2]
+  (let [m1 (mean v1)
+        m2 (mean v2)
+        sp (.sqrt js/Math (/
+                           (+ (* (- (nobs v1) 1) (variance v1))
+                              (* (- (nobs v1) 1) (variance v1)))
+                           (+ (nobs v1) (nobs v2) -2)))]
+    (/
+     (- (mean v1) (mean v2))
+     (* sp (.sqrt js/Math (+ (/ 1 (nobs v1) (nobs v2) )))))
+   ))
+
+
+(defn t-test-welch [v1 v2])
+
+(defn t-test-pair [v1 v2]
+  (let [m1 (mean v1)
+        m2 (mean v2)
+        n (nobs v1) ;= to v2
+        dif1 (map #(% - m1) v1)
+        dif2 (map #(% - m2) v2)]
+    (* (- m1 m2)
+       (.sqrt js/Math (/ (* n (dec n))
+                         (reduce +
+                                 (map #(.pow js/Math (- %1 %2) 2))
+                                 dif1 dif2))))
+    ))
+  
+;correlations 
 
 (defn pearson [v1 v2]
   (/ (cov v1 v2)
@@ -36,3 +77,6 @@
         r2 (rank v2)]
     (pearson r1 r2))
   )
+
+
+;Categorical comparison: chi-square

@@ -1,4 +1,4 @@
-(ns stats.core
+(ns stats.web
   "Stats playground"
   {:author "Tiago Antao"}
   (:require [cljsjs.vega]
@@ -10,31 +10,21 @@
 (def spec "
 {
   \"$schema\": \"https://vega.github.io/schema/vega-lite/v2.json\",
-  \"description\": \"Stock prices of 5 Tech Companies over Time with Averages.\",
-  \"adata\": {\"url\": \"data/stocks.csv\"},
-  \"layer\": [
-    {
-      \"mark\": \"line\",
-      \"encoding\": {
-        \"x\": {\"field\": \"date\", \"type\": \"temporal\"},
-        \"y\": {\"field\": \"price\", \"type\": \"quantitative\"},
-        \"color\": {\"field\": \"symbol\", \"type\": \"nominal\"}
-      }
-    },
-    {
-      \"mark\": \"rule\",
-      \"encoding\": {
-        \"y\": {
-          \"field\": \"price\",
-          \"type\": \"quantitative\",
-          \"aggregate\": \"mean\"
-        },
-        \"size\": {\"value\": 2},
-        \"color\": {\"field\": \"symbol\", \"type\": \"nominal\"}
-      }
-    }
-  ]
+  \"description\": \"A simple bar chart with embedded data.\",
+  \"data\": {
+    \"values\": [
+      {\"a\": \"A\",\"b\": 28}, {\"a\": \"B\",\"b\": 55}, {\"a\": \"C\",\"b\": 43},
+      {\"a\": \"D\",\"b\": 91}, {\"a\": \"E\",\"b\": 81}, {\"a\": \"F\",\"b\": 53},
+      {\"a\": \"G\",\"b\": 19}, {\"a\": \"H\",\"b\": 87}, {\"a\": \"I\",\"b\": 52}
+    ]
+  },
+  \"mark\": \"bar\",
+  \"encoding\": {
+    \"x\": {\"field\": \"a\", \"type\": \"ordinal\"},
+    \"y\": {\"field\": \"b\", \"type\": \"quantitative\"}
+  }
 }
+
 ")
 
 
@@ -42,14 +32,11 @@
   [canvas-name]
   (set! (.-onload js/window)
         (let [jspec (.parse js/JSON spec)]
-              (set! (.-width jspec) 300)
-              (set! (.-heigth jspec) 300)
-              (let [source (.stringify js/JSON jspec nil 2)
-                    spec (.-spec (js/vl.compile jspec))
-                    div (.html (.classed (js/d3.select "#vis-simple") "vega-embed" true) "")
-                    ]
-                (prn (js/vega.parse spec))
-                (.-spec (js/vega.parse spec {} (fn [error chart]
-                                                 (prn 3))))
-                (prn 2)))))
-
+          
+          (set! (.-width jspec) 600)
+          (set! (.-heigth jspec) 600)
+          (let [cspec (.-spec (.compile js/vl jspec))
+                view (new js/vega.View (.parse js/vega cspec))
+                renderer (.renderer view "canvas")]
+            (.run (.initialize renderer "#vis-simple"))
+            ))))

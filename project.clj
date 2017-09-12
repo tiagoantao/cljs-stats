@@ -19,30 +19,27 @@
   {:builds {
             :dev
             {:source-paths ["src"]
-             :figwheel {;:on-jsload "stats.web/on-js-reload"}
+             :figwheel {:on-jsload "stats.web/on-js-reload"}
              :compiler {:main stats.web
                         :asset-path "js/compiled/out"
                         :output-to "resources/public/js/compiled/stats.js"
                         :output-dir "resources/public/js/compiled/out"
                         :source-map-timestamp true
                         :preloads [devtools.preload]
-                        ;:language-in :es5
-                        ;:language-out :es5
-                        ;:npm-deps {:vega-lite "2.0.0-beta.10" :vega "3.0.1"}
-                        ;:install-deps true
                         :static-fns true
                         :pretty-print false
                         :optimizations :none}}
 
             :test
-             {:source-paths ["src" "test"]
-              :compiler {:output-to "out/testable.js"
-              :main stats.runner
-              :optimizations :none}}
+            {:source-paths ["src" "test"]
+             :compiler {:output-to "out/testable.js"
+                        :main stats.runner
+                        :optimizations :none}}
             }}
 
   :figwheel {
-             :css-dirs ["resources/public/css"] ;; watch and update CSS
+             :css-dirs ["resources/public/css"]
+             :builds-to-start ["dev"]
              :validate-config false
              }
 

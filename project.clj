@@ -34,6 +34,7 @@
             {:source-paths ["src" "test"]
              :compiler {:output-to "out/testable.js"
                         :main stats.runner
+                        :process-shim false
                         :optimizations :none}}
             }}
 

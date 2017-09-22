@@ -1,5 +1,7 @@
 # stats
 
+[![CircleCI](https://circleci.com/gh/tiagoantao/stats.svg?style=svg)](https://circleci.com/gh/tiagoantao/stats)
+
 A statistical library implemented in ClojureScript
 
 # Functionality

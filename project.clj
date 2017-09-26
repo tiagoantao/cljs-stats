@@ -11,7 +11,7 @@
                  [cljsjs/vega-lite "2.0.0-beta.14-0"]]
 
   :plugins [[lein-figwheel "0.5.12"]
-            [lein-marginalia "0.9.0"]
+            [lein-codox "0.10.3"]
             [lein-cljsbuild "1.1.6" :exclusions [[org.clojure/clojure]]]
             [lein-doo "0.1.7"]]
 
@@ -38,6 +38,13 @@
                         :optimizations :none}}
             }}
 
+  :codox {
+          :output-path "docs"
+          :language :clojurescript
+          :source-paths ["src"]
+          :metadata {:doc/format :markdown}
+          }
+  
   :figwheel {
              :css-dirs ["resources/public/css"]
              :builds-to-start ["dev"]

@@ -8,7 +8,9 @@
 
 ;XXX structured return?
 
-(defn sse [y ye]
+(defn sse
+  "Sum of squared errors of prediction"
+  [y ye]
   (reduce + (map #(.pow js/Math (- %1 %2) 2) y ye ))
   )
 

@@ -6,8 +6,6 @@
             [stats.test :refer [pearson]])
   )
 
-;XXX structured return?
-
 (defn sse
   "Sum of squared errors of prediction"
   [y ye]
@@ -27,4 +25,9 @@
                (.sqrt js/Math (* (- mx2 (* mx mx))
                                  (- my2 (* my my)))))
         sse (sse y (map #(+ (*) b) x))]
+    {:a a :b b :sse sse :rxy rxy}
   ))
+
+(prn 1111 (mean [0 1]))
+(prn 1111 (linear [0 1] [0 1]))
+

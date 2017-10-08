@@ -62,8 +62,6 @@
     (map #(inc (mean %)) poses)
     ))
 
-(rank [1 0])
-
 (defn rank-sp
   "Spearman rank correlation"
   [v1 v2]

@@ -4,7 +4,7 @@
   {:author "Tiago Antao"}
   (:require [stats.sample :refer [nobs]]
             [stats.stats :refer [mean std variance]]
-            [stats.multi :refer [cov]])
+            [stats.multi :refer [sample-cov]])
   )
 
 (defn t-test-one [v miu]
@@ -43,7 +43,7 @@
 ;correlations 
 
 (defn pearson [v1 v2]
-  (/ (cov v1 v2)
+  (/ (sample-cov v1 v2)
      (* (std v1) (std v2))))
 
 (defn all-pos [v vec]

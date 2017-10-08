@@ -3,7 +3,12 @@
             [stats.test :as t]))
 
 
-(deftest samples
+(deftest tests
+  (testing "Pearson"
+    (is (= (t/pearson [0 1 2] [0 1 2]) 1))
+    (is (= (t/pearson [0 1 2 3] [0 1 2 -1]) -0.2))
+    (is (= (t/pearson [0 0 1 1] [0 1 0 1]) 0))
+    )
   (testing "all-pos"
     (is (= (t/all-pos 0 []) []))
     (is (= (t/all-pos 0 [1 2 2 4]) []))

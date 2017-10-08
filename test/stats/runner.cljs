@@ -3,8 +3,10 @@
             [doo.runner :refer-macros [doo-all-tests doo-tests]]
             [stats.sample-test]
             [stats.test-test]
-            [stats.stats-test]))
+            [stats.stats-test]
+            [stats.regression-test]))
 
 (doo-tests 'stats.sample-test
            'stats.test-test
-           'stats.stats-test)
+           'stats.stats-test
+           'stats.regression-test)

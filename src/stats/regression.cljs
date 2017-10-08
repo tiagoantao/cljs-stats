@@ -1,4 +1,4 @@
-(ns stats.test
+(ns stats.regression
   "Regression analysis
   "
   {:author "Tiago Antao"}

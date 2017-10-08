@@ -16,8 +16,9 @@
   (let [mx (mean x)
         my (mean y)
         r (pearson x y)
-        b (* r (/ (std x) (std y)))
-        a (- (mean y) (* b (mean x)))
+        b (/ (reduce + (map #(* (- %1 mx) (- %2 my)) x y))
+             (reduce + (map #(.pow js/Math (- % mx) 2) x) ))
+        a (- my (* b mx))
         mx2 (mean (map #(* % %) x))
         my2 (mean (map #(* % %) y))
         mxy (mean (map #(* %1 %2) x y))
@@ -25,9 +26,9 @@
                (.sqrt js/Math (* (- mx2 (* mx mx))
                                  (- my2 (* my my)))))
         sse (sse y (map #(+ (*) b) x))]
-    {:a a :b b :sse sse :rxy rxy}
+    {:a a :b b :sse sse :rxy rxy :R2 (* r r)}
   ))
 
-(prn 1111 (mean [0 1]))
-(prn 1111 (linear [0 1] [0 1]))
+(prn 1111 (pearson [0 1] [0 1]))
+(prn 1111 (linear [0 1 2 3] [0 1.1 2 4]))
 

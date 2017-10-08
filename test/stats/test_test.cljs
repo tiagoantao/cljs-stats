@@ -4,13 +4,19 @@
 
 
 (deftest samples
-  (testing "Testing all-pos"
+  (testing "all-pos"
     (is (= (t/all-pos 0 []) []))
     (is (= (t/all-pos 0 [1 2 2 4]) []))
     (is (= (t/all-pos 1 [1 2 2 4]) [0]))
     (is (= (t/all-pos 2 [1 2 2 4]) [1 2]))
     (is (= (t/all-pos 4 [1 2 2 4]) [3]))
     (is (nil? (t/all-pos 0 '(1 2 2 4))))
-    ))
+    )
+  (testing "Rank"
+    (is (= (t/rank [0]) '(1)))
+    (is (= (t/rank [1 0]) '(2 1)))
+    (is (= (t/rank [1 0 0]) '(3 1.5 1.5)))
+    )
+  )
 
 

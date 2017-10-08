@@ -2,15 +2,10 @@
   "Statistical Tests
   "
   {:author "Tiago Antao"}
-  (:require [stats.stats :refer [mean std variance]]
+  (:require [stats.sample :refer [nobs]]
+            [stats.stats :refer [mean std variance]]
             [stats.multi :refer [cov]])
   )
-
-
-
-;XXX More structured report (e.g. df)
-
-;mean comparisons
 
 (defn t-test-one [v miu]
   (let [m (mean v)
@@ -41,8 +36,8 @@
     (* (- m1 m2)
        (.sqrt js/Math (/ (* n (dec n))
                          (reduce +
-                                 (map #(.pow js/Math (- %1 %2) 2))
-                                 dif1 dif2))))
+                                 (map #(.pow js/Math (- %1 %2) 2)
+                                 dif1 dif2)))))
     ))
   
 ;correlations 
@@ -64,11 +59,10 @@
 (defn rank [v]
   (let [s (into [] (sort v))
         poses (map #(all-pos % s) v)]
-    (map #(mean %) v)
+    (map #(inc (mean %)) poses)
     ))
 
-(rank [0.1 0.2 0 0])
-
+(rank [1 0])
 
 (defn rank-sp
   "Spearman rank correlation"

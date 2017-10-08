@@ -20,7 +20,3 @@
 
 (defn sample-cov [v1 v2]
   (internal-cov v1 v2 (dec (nobs v1))))
-
-(cov [1 2] [1 2])
-
-(sample-cov [1 2] [1 2])
